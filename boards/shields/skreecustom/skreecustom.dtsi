@@ -28,10 +28,6 @@ default_transform: keymap_transform_0 {
     >;
 };
 
-  
-    >;
-};
-
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
