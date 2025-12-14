@@ -1,0 +1,24 @@
+/*
+ * Skreecustom Right Side - Peripheral Half
+ */
+
+#include "skreecustom.dtsi"
+
+/* Apply column offset for right side */
+&default_transform {
+    col-offset = <8>;
+};
+
+/* Column GPIOs via shift register - right side columns 0-7 (offset applied above) */
+&kscan0 {
+    col-gpios
+        = <&shifter 0 GPIO_ACTIVE_HIGH>
+        , <&shifter 1 GPIO_ACTIVE_HIGH>
+        , <&shifter 2 GPIO_ACTIVE_HIGH>
+        , <&shifter 3 GPIO_ACTIVE_HIGH>
+        , <&shifter 4 GPIO_ACTIVE_HIGH>
+        , <&shifter 5 GPIO_ACTIVE_HIGH>
+        , <&shifter 6 GPIO_ACTIVE_HIGH>
+        , <&shifter 7 GPIO_ACTIVE_HIGH>
+        ;
+};

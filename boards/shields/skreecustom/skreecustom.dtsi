@@ -1,0 +1,140 @@
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,matrix_transform = &default_transform;
+    };
+
+    /* 
+     * Matrix Transform - adjust rows/columns/map to match your keyboard layout
+     * This is a placeholder - customize for your specific key matrix
+     */
+default_transform: keymap_transform_0 {
+    compatible = "zmk,matrix-transform";
+    columns = <12>;
+    rows = <6>;
+
+    map = <
+    RC(0,0)   RC(0,1)   RC(0,2)   RC(0,3)   RC(0,4)   RC(0,5)         RC(0,6)   RC(0,7)   RC(0,8)   RC(0,9)   RC(0,10)  RC(0,11)  
+    RC(1,0)   RC(1,1)   RC(1,2)   RC(1,3)   RC(1,4)   RC(1,5)         RC(1,6)   RC(1,7)   RC(1,8)   RC(1,9)   RC(1,10)  RC(1,11)  
+    RC(2,0)   RC(2,1)   RC(2,2)   RC(2,3)   RC(2,4)   RC(2,5)         RC(2,6)   RC(2,7)   RC(2,8)   RC(2,9)   RC(2,10)  RC(2,11)  
+    RC(3,0)   RC(3,1)   RC(3,2)   RC(3,3)   RC(3,4)   RC(3,5)         RC(3,6)   RC(3,7)   RC(3,8)   RC(3,9)   RC(3,10)  RC(3,11)  
+    RC(4,0)   RC(4,1)   RC(4,2)   RC(4,3)   RC(4,4)                             RC(4,7)   RC(4,8)   RC(4,9)   RC(4,10)  RC(4,11)  
+
+                                  RC(5,0)   RC(5,1)   RC(5,2)        RC(5,8)   RC(5,7)    RC(5,6)   
+                                  RC(5,3)   RC(5,4)   RC(5,5)        RC(5,11)  RC(5,10)  RC(5,9)             
+    >;
+};
+
+
+    /* Key scan matrix configuration */
+    kscan0: kscan_0 {
+        compatible = "zmk,kscan-gpio-matrix";
+        wakeup-source;
+        diode-direction = "col2row";
+        
+        /* Rows 1-7: P1.15, P0.28, P1.01, P0.09, P0.10, P1.11, P1.07 */
+        row-gpios
+            = <&gpio1 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 1  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+//            , <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 7  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+    };
+
+    /* Encoder - Left side (disabled by default, enabled in skreecustom_encoder_left.overlay) */
+    left_encoder: encoder_left {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio1 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <144>;
+        status = "disabled";
+    };
+
+    /* Encoder - Left side (disabled by default, enabled in skreecustom_encoder_left.overlay) */
+    left_encoder: encoder_left_2 {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio1 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <144>;
+        status = "disabled";
+    };
+    
+
+    /* Encoder - Right side (disabled by default, enabled in skreecustom_encoder_right.overlay) */
+    right_encoder: encoder_right {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio1 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <144>;
+        status = "disabled";
+    };
+
+    /* Encoder sensor mapping */
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder &left_encoder_2 &right_encoder>;
+        triggers-per-rotation = <36>;
+    };
+
+    /* Split input for right-side trackball (data sent from peripheral to central) */
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        trackball_peripheral_split: trackball_peripheral_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+    };
+
+    /* Right trackball listener - POINTER mode (disabled by default) */
+    trackball_peripheral_listener: trackball_peripheral_listener {
+        compatible = "zmk,input-listener";
+        status = "disabled";
+        device = <&trackball_peripheral_split>;
+        input-processors =
+            <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,
+            <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
+            <&zip_temp_layer 3 500>;
+    };
+
+    /* Left trackball listener - SCROLL mode (disabled by default) */
+    trackball_central_listener: trackball_central_listener {
+        compatible = "zmk,input-listener";
+        status = "disabled";
+        input-processors = 
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
+            <&zip_scroll_scaler 1 20>;
+    };
+};
+
+/* 
+ * SPI0 - Shift Register (74HC595)
+ * SCK: P1.03, MOSI: P1.05, CS: P1.13
+ * Always enabled - required for column scanning
+ */
+&spi0 {
+    status = "okay";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio1 13 GPIO_ACTIVE_LOW>;
+    
+    shifter: 595@0 {
+        compatible = "zmk,gpio-595";
+        status = "okay";
+        gpio-controller;
+        spi-max-frequency = <200000>;
+        reg = <0>;
+        #gpio-cells = <2>;
+        ngpios = <8>;
+    };
+};

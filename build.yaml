@@ -1,0 +1,105 @@
+# =============================================================================
+# ZMK Build Configuration
+# =============================================================================
+# 
+# HOW TO USE:
+# -----------
+# 1. Comment/uncomment the build configurations you need
+# 2. The "shield" field accepts multiple shields separated by spaces
+# 3. Add-ons can be combined with the base shields
+#
+# AVAILABLE SHIELDS:
+# ------------------
+# Base (required, pick one per side):
+#   - skreecustom_left      : Left half (central)
+#   - skreecustom_right     : Right half (peripheral)
+#
+# Optional Add-ons:
+#   - skreecustom_encoder_left     : Encoder on left side
+#   - skreecustom_encoder_right    : Encoder on right side
+#   - skreecustom_trackball_left   : Trackball on left (scroll mode)
+#   - skreecustom_trackball_right  : Trackball on right (pointer mode)
+#   - nice_view_adapter nice_view  : Nice!View display
+#
+# EXAMPLES:
+# ---------
+# Basic left half:
+#   shield: skreecustom_left
+#
+# Left with encoder:
+#   shield: skreecustom_left skreecustom_encoder_left
+#
+# Left with Nice!View:
+#   shield: skreecustom_left nice_view_adapter nice_view
+#
+# Left with scroll trackball + encoder + Nice!View:
+#   shield: skreecustom_left skreecustom_trackball_left skreecustom_encoder_left nice_view_adapter nice_view
+#
+# Right with pointer trackball:
+#   shield: skreecustom_right skreecustom_trackball_right
+#
+# =============================================================================
+
+---
+include:
+  # -------------------------------------------------------------------------
+  # BASIC SPLIT (no extras)
+  # -------------------------------------------------------------------------
+  - board: xiao_ble
+    shield: skreecustom_left
+  - board: xiao_ble
+    shield: skreecustom_right
+
+  # -------------------------------------------------------------------------
+  # WITH ENCODERS (both sides)
+  # -------------------------------------------------------------------------
+  # - board: xiao_ble
+  #   shield: skreecustom_left skreecustom_encoder_left
+  # - board: xiao_ble
+  #   shield: skreecustom_right skreecustom_encoder_right
+
+  # -------------------------------------------------------------------------
+  # WITH RIGHT TRACKBALL (pointer mode)
+  # -------------------------------------------------------------------------
+  # - board: xiao_ble
+  #   shield: skreecustom_left
+  # - board: xiao_ble
+  #   shield: skreecustom_right skreecustom_trackball_right
+
+  # -------------------------------------------------------------------------
+  # WITH LEFT TRACKBALL (scroll mode)
+  # -------------------------------------------------------------------------
+  # - board: xiao_ble
+  #   shield: skreecustom_left skreecustom_trackball_left
+  # - board: xiao_ble
+  #   shield: skreecustom_right
+
+  # -------------------------------------------------------------------------
+  # WITH BOTH TRACKBALLS (left=scroll, right=pointer)
+  # -------------------------------------------------------------------------
+  # - board: xiao_ble
+  #   shield: skreecustom_left skreecustom_trackball_left
+  # - board: xiao_ble
+  #   shield: skreecustom_right skreecustom_trackball_right
+
+  # -------------------------------------------------------------------------
+  # WITH NICE!VIEW DISPLAY (left side only typically)
+  # -------------------------------------------------------------------------
+  # - board: xiao_ble
+  #   shield: skreecustom_left nice_view_adapter nice_view
+  # - board: xiao_ble
+  #   shield: skreecustom_right
+
+  # -------------------------------------------------------------------------
+  # FULL FEATURED: encoders + right trackball + Nice!View
+  # -------------------------------------------------------------------------
+  # - board: xiao_ble
+  #   shield: skreecustom_left skreecustom_encoder_left nice_view_adapter nice_view
+  # - board: xiao_ble
+  #   shield: skreecustom_right skreecustom_encoder_right skreecustom_trackball_right
+
+  # -------------------------------------------------------------------------
+  # SETTINGS RESET (flash this to clear bluetooth bonds)
+  # -------------------------------------------------------------------------
+  # - board: xiao_ble
+  #   shield: settings_reset

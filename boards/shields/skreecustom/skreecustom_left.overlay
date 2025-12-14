@@ -1,0 +1,24 @@
+/*
+ * Skreecustom Left Side - Central Half
+ */
+
+#include "skreecustom.dtsi"
+
+/* Column GPIOs via shift register - left side columns 0-7 */
+&kscan0 {
+    col-gpios
+        = <&shifter 0 GPIO_ACTIVE_HIGH>
+        , <&shifter 1 GPIO_ACTIVE_HIGH>
+        , <&shifter 2 GPIO_ACTIVE_HIGH>
+        , <&shifter 3 GPIO_ACTIVE_HIGH>
+        , <&shifter 4 GPIO_ACTIVE_HIGH>
+        , <&shifter 5 GPIO_ACTIVE_HIGH>
+        , <&shifter 6 GPIO_ACTIVE_HIGH>
+        , <&shifter 7 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+/* Enable right-side trackball listener on central (receives data from peripheral) */
+&trackball_peripheral_listener {
+    status = "okay";
+};

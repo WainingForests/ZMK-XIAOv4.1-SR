@@ -1,0 +1,19 @@
+# Shield definitions for skreecustom
+
+config SHIELD_SKREECUSTOM_LEFT
+    def_bool $(shields_list_contains,skreecustom_left)
+
+config SHIELD_SKREECUSTOM_RIGHT
+    def_bool $(shields_list_contains,skreecustom_right)
+
+config SHIELD_SKREECUSTOM_ENCODER_LEFT
+    def_bool $(shields_list_contains,skreecustom_encoder_left)
+
+config SHIELD_SKREECUSTOM_ENCODER_RIGHT
+    def_bool $(shields_list_contains,skreecustom_encoder_right)
+
+config SHIELD_SKREECUSTOM_TRACKBALL_LEFT
+    def_bool $(shields_list_contains,skreecustom_trackball_left)
+
+config SHIELD_SKREECUSTOM_TRACKBALL_RIGHT
+    def_bool $(shields_list_contains,skreecustom_trackball_right)

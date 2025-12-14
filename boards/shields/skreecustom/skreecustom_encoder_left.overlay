@@ -1,0 +1,12 @@
+/*
+ * Left Encoder Add-on
+ * Add "skreecustom_encoder_left" to your shield list to enable
+ */
+
+&left_encoder {
+    status = "okay";
+};
+
+&left_encoder_2 {
+    status = "okay";
+};
