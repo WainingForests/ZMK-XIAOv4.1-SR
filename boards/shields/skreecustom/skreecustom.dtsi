@@ -8,10 +8,8 @@
         zmk,matrix_transform = &default_transform;
     };
 
-    /* 
-     * Matrix Transform - adjust rows/columns/map to match your keyboard layout
-     * This is a placeholder - customize for your specific key matrix
-     */
+
+
 default_transform: keymap_transform_0 {
     compatible = "zmk,matrix-transform";
     columns = <16>;
@@ -30,9 +28,10 @@ default_transform: keymap_transform_0 {
     >;
 };
 
+  
+    >;
+};
 
-
-    /* Key scan matrix configuration */
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
@@ -53,17 +52,17 @@ default_transform: keymap_transform_0 {
     /* Encoder - Left side (disabled by default, enabled in skreecustom_encoder_left.overlay) */
     left_encoder: encoder_left {
         compatible = "alps,ec11";
-        a-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        a-gpios = <&gpio1  (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio1 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         steps = <144>;
         status = "disabled";
     };
 
     /* Encoder - Left side (disabled by default, enabled in skreecustom_encoder_left.overlay) */
-    left_encoder: encoder_left_2 {
+    left_encoder_2: encoder_left_2 {
         compatible = "alps,ec11";
-        a-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&gpio1 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        a-gpios = <&gpio1 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0 16 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         steps = <144>;
         status = "disabled";
     };
