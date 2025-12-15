@@ -1,18 +1,16 @@
 /*
  * Skreecustom Left Side - Central Half
  */
-
 #include "skreecustom.dtsi"
 
-&split_inputs {
-    status = "okay";
+&left_encoder {
+	status = "okay";
 };
 
-&trackball_peripheral_listener {
-    status = "okay";
+&left_encoder_2 {
+	status = "okay";
 };
 
-/* Column GPIOs via shift register - left side columns 0-7 */
 &kscan0 {
     col-gpios
         = <&shifter 0 GPIO_ACTIVE_HIGH>
@@ -26,7 +24,41 @@
         ;
 };
 
-/* Enable right-side trackball listener on central (receives data from peripheral) */
+&split_inputs {
+    status = "okay";
+};
+
 &trackball_peripheral_listener {
     status = "okay";
+};
+/* Enable input-split on central to receive trackball data from peripheral */
+&trackball_peripheral_split {
+    status = "okay";
+};
+
+&trackball_peripheral_listener {
+    status = "okay";
+};
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+&spi1 {
+    cs-gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
+
+    trackball_central: trackball_central@0 {
+        status = "disabled";
+        compatible = "pixart,pmw3610";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        irq-gpios = <&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        cpi = <600>;
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
+    };
+};
+
+// Overrides for the input listener node
+&trackball_central_listener {
+    status = "okay";
+    device = <&trackball_central>;
 };
