@@ -20,7 +20,8 @@
     };
 };
 
-/* Link the trackball to the split input system */
+/* Enable the input-split and link trackball to it */
 &trackball_peripheral_split {
+    status = "okay";
     device = <&trackball_peripheral>;
 };

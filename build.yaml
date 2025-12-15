@@ -46,9 +46,9 @@ include:
   # BASIC SPLIT (no extras)
   # -------------------------------------------------------------------------
   - board: xiao_ble
-    shield: skreecustom_left
+    shield: skreecustom_left skreecustom_encoder_left
   - board: xiao_ble
-    shield: skreecustom_right
+    shield: skreecustom_right skreecustom_trackball_right
 
   # -------------------------------------------------------------------------
   # WITH ENCODERS (both sides)
