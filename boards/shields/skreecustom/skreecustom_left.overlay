@@ -4,6 +4,14 @@
 
 #include "skreecustom.dtsi"
 
+&split_inputs {
+    status = "okay";
+};
+
+&trackball_peripheral_listener {
+    status = "okay";
+};
+
 /* Column GPIOs via shift register - left side columns 0-7 */
 &kscan0 {
     col-gpios
