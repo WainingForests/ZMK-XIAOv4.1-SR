@@ -80,7 +80,7 @@ default_transform: keymap_transform_0 {
     };
 
     /* Split input for right-side trackball (data sent from peripheral to central) */
-    split_inputs {
+    split_inputs: split_inputs {
         #address-cells = <1>;
         #size-cells = <0>;
         status = "disabled";
